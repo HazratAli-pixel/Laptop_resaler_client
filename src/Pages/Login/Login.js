@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginsvg from '../../assets/icons/Mobile login-amico.svg';
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -8,16 +9,17 @@ import useToken from '../../hooks/useToken';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { signIn } = useContext(AuthContext);
+    const { signIn, signinWithGoogle } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const [token] = useToken(loginUserEmail);
     const location = useLocation();
     const navigate = useNavigate();
+    const [error, setError] = useState('')
+    const from = location.state?.from?.pathname || '/';
 
     useTitle("Login Form")
     
-    const from = location.state?.from?.pathname || '/';
 
     if (token) {
         navigate(from, { replace: true });
@@ -36,6 +38,15 @@ const Login = () => {
                 console.log(error.message)
                 setLoginError(error.message);
             });
+    }
+    const signinwithgoogle = ()=>{
+        signinWithGoogle()
+        .then(result=>{
+            setError('');
+            toast.success("Successfuly Loged in")
+            navigate(from, {replace: true})
+        })
+        .then(error => setError(error.message))
     }
 
     return (
@@ -77,7 +88,7 @@ const Login = () => {
                         </form>
                         <p className='p-3'>Don't have an account? <Link className='text-secondary' to="/signup">create new</Link></p>
                         <div className="divider">OR</div>
-                        <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+                        <button className='btn btn-outline w-full' onClick={signinwithgoogle}>CONTINUE WITH GOOGLE</button>
                     </div>
                     
                 </div>

@@ -7,13 +7,13 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 import './Navbar.css';
 
 const Header = () => {
-    const {modechange, modeToogle, user, logout} = useContext(AuthContext)
+    const {modechange, modeToogle, user, logOut} = useContext(AuthContext)
     const navigate = useNavigate();
     const themechange = ()=>{
       modechange();
     }
     const userlogout = ()=>{
-      logout();
+      logOut();
       localStorage.removeItem("accessToken")
       const tokenName = 'accessToken';
       const token = '00000';
