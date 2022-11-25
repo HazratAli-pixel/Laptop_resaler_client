@@ -34,7 +34,7 @@ const Header = () => {
           <div className="container mx-auto navbar bg-neutral text-neutral-content">
             <div className="navbar-start">
               <Link to='/' className="btn btn-ghost normal-case text-xl"> 
-                <img src="./logo.png" alt="" style={{width: '50px'}} className="mr-2 border-4 rounded-full " /> <span className='header_font text-3xl'>Beche Din</span> 
+                <img src="./003.jpg" alt="" style={{width: '50px'}} className="mr-2 border-4 rounded-full " /> <span className='header_font text-xl md:text-2xl lg:text-3xl'>Buy & Sale Laptops</span> 
               </Link>
             </div>
             <div className='navbar-end'>

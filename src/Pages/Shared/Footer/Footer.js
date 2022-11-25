@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
+    const year = new Date().getFullYear();
     return (
         <footer className="p-10">
-            <div className='footer'>
-                <div>
+            <div className='footer flex flex-row justify-around items-center'>
+                <div className='text-center'>
                     <span className="footer-title">Services</span>
                     <Link to="/" className="link link-hover">Branding</Link>
                     <Link to="/" className="link link-hover">Design</Link>
@@ -27,7 +28,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className='text-center mt-32'>
-                <p>Copyright © 2022 - All right reserved by ACME Industries Ltd</p>
+                <p>Copyright © {year} - All right reserved by <Link to='/' className='text-blue-500 font-bold'>Buy & Sale Laptops</Link> </p>
             </div>
         </footer>
     );

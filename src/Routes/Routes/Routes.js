@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../Layout/Main";
+import Blog from "../../Pages/Home/Blog/Blog";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
@@ -23,10 +24,17 @@ const router = createBrowserRouter([
                 path: '/signup',
                 element: <SignUp></SignUp>
             },
-            // {
-            //     path: '/appointment',
-            //     element: <Appointment></Appointment>
-            // }
+            {
+                path: '/blog',
+                element: <Blog></Blog>
+            },
+            {
+                path: 'quiz/:category',
+                loader: async ({params})=>{
+                    return fetch(`/${params.category}`)
+                },
+                element: <Blog></Blog>,
+            }
         ]
     },
     // {

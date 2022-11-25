@@ -4,6 +4,7 @@ import toast from 'react-hot-toast';
 import { Link, useNavigate } from 'react-router-dom';
 import signupsvg from '../../assets/icons/Signup-bro.svg';
 import { AuthContext } from '../../contexts/AuthProvider';
+import useTitle from '../../hooks/useTitle';
 import useToken from '../../hooks/useToken';
 
 
@@ -15,6 +16,8 @@ const SignUp = () => {
     const [token] = useToken(createdUserEmail);
     const navigate = useNavigate();
 
+    useTitle("Signup Form")
+    
     if(token){
         navigate('/');
     }
