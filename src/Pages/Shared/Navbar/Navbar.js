@@ -41,17 +41,9 @@ const Header = () => {
               <div className="hidden lg:flex">
                 <ul className="menu menu-horizontal p-0">
                   <li><Link to='/'>Home</Link></li>
-                  <li><NavLink to='/servicelist' className={({ isActive }) =>
-                    isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>Service</NavLink>
+                  <li><NavLink to='/dashboard' className={({ isActive }) =>
+                    isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>Dashboard</NavLink>
                   </li>
-                  {
-                    user? <><li><NavLink to='/addservice' className={({ isActive }) =>
-                    isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>Add Service</NavLink>
-                  </li>
-                  <li><NavLink to='/myreview' className={({ isActive }) =>
-                    isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>My Review</NavLink>
-                  </li></>:""
-                  }
                   <li><NavLink to='/blog' className={({ isActive }) =>
                     isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>Blog</NavLink>
                   </li>
@@ -79,14 +71,10 @@ const Header = () => {
                   <li><NavLink to='/servicelist' className={({ isActive }) =>
                     isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>Service</NavLink>
                   </li>
-                  {
-                    user? <><li><NavLink to='/addservice' className={({ isActive }) =>
-                    isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>Add Service</NavLink>
+                 
+                  <li className='py-1'><NavLink to='/dashboard' className={({ isActive }) =>
+                    isActive ? 'bg-green-400 text-black rounded-lg p-1' : 'p-1'}>Dashboard</NavLink>
                   </li>
-                  <li><NavLink to='/myreview' className={({ isActive }) =>
-                    isActive ? 'bg-green-400 text-black rounded-lg' : undefined}>My Review</NavLink>
-                  </li></>:""
-                  }
                   <li className='py-1'><NavLink to='/blog' className={({ isActive }) =>
                     isActive ? 'bg-green-400 text-black rounded-lg p-1' : 'p-1'}>Blog</NavLink>
                   </li>

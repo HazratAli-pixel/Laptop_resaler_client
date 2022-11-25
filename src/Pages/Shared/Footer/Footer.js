@@ -27,7 +27,7 @@ const Footer = () => {
                     <Link to="/" className="link link-hover">Cookie policy</Link>
                 </div>
             </div>
-            <div className='text-center mt-32'>
+            <div className='text-center mt-5'>
                 <p>Copyright © {year} - All right reserved by <Link to='/' className='text-blue-500 font-bold'>Buy & Sale Laptops</Link> </p>
             </div>
         </footer>

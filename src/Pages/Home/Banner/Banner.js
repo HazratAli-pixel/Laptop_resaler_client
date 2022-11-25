@@ -10,11 +10,11 @@ const Banner = () => {
                     <img src={buy_sale} className="rounded-lg" alt='' />
                 </div>
                 <div className='w-1/2'>
-                    <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold">Buye & Sale Laptops</h1>
+                    <h1 className="text-2xl md:text-3xl lg:text-5xl font-bold animate-bounce">Buye & Sale Laptops</h1>
                     <p className="py-6 text-lg md:text-2xl lg:text-2xl">Buy, sell and find your desire laptops from here easly. Buy products from the right person.</p>
                     <div className='flex flex-row justify-center gap-3'>
-                        <Link to='/login' className='btn btn-primary hover:btn-success animate-bounce'>Login</Link>
-                        <Link to='/signup' className='btn btn-outline animate-bounce'>Sign Up</Link>
+                        <Link to='/login' className='btn btn-primary hover:btn-success '>Login</Link>
+                        <Link to='/signup' className='btn btn-outline '>Sign Up</Link>
                     </div>
                 </div>
             </div>
