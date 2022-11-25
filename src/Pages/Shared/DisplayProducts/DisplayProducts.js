@@ -1,9 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import useTitle from '../../../hooks/useTitle';
 import BookingModal from '../BookingModal/BookingModal';
+import ReportModal from '../ReportModal/ReportModal';
 import DisplayProduct from './DisplayProduct';
 
 const DisplayProducts = () => {
+    useTitle('Product list')
+    const {user} = useContext(AuthContext)
     const [modalstatus, setamodalstatus] = useState(null)
+    const [reportmodal, setreportamodal] = useState(null)
     const productsList = [
         {
             id: 1,
@@ -42,17 +48,27 @@ const DisplayProducts = () => {
                     key={product.id}
                     product={product}
                     setamodalstatus={setamodalstatus}
+                    setreportamodal={setreportamodal}
                 ></DisplayProduct>
                 )
             }
             </div>
             {
-                modalstatus && 
-            <BookingModal
-            setamodalstatus={setamodalstatus}
-            refetch={''}
-            product={modalstatus}
-            ></BookingModal>
+                modalstatus && user &&
+                    <BookingModal
+                    setamodalstatus={setamodalstatus}
+                    refetch={''}
+                    product={modalstatus}
+                    ></BookingModal>
+            
+            }
+            {
+                reportmodal && user &&
+                    <ReportModal
+                    setreportamodal={setreportamodal}
+                    refetch={''}
+                    reportmodal={reportmodal}
+                    ></ReportModal>
             }
         </div>
     );

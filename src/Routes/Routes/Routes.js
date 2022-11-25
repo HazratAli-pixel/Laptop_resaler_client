@@ -6,6 +6,7 @@ import Login from "../../Pages/Login/Login";
 import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 import DisplayProducts from "../../Pages/Shared/DisplayProducts/DisplayProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -34,38 +35,38 @@ const router = createBrowserRouter([
                 loader: async ({params})=>{
                     return fetch(`/${params.category}`)
                 },
-                element: <DisplayProducts></DisplayProducts>,
+                element: <PrivateRoute><DisplayProducts></DisplayProducts></PrivateRoute> ,
             }
         ]
     },
-    // {
-    //     path: '/dashboard',
-    //     element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
-    //     errorElement: <DisplayError></DisplayError>,
-    //     children: [
-    //         {
-    //             path: '/dashboard',
-    //             element: <MyAppointment></MyAppointment>
-    //         },
-    //         {
-    //             path: '/dashboard/allusers',
-    //             element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
-    //         },
-    //         {
-    //             path: '/dashboard/adddoctor',
-    //             element: <AdminRoute><AddDoctor></AddDoctor></AdminRoute>
-    //         },
-    //         {
-    //             path: '/dashboard/managedoctors',
-    //             element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
-    //         },
-    //         {
-    //             path: '/dashboard/payment/:id',
-    //             element: <Payment></Payment>,
-    //             loader: ({params}) => fetch(`https://doctors-portal-server-rust.vercel.app/bookings/${params.id}`)
-    //         },
-    //     ]
-    // }
+    {
+        path: '/dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <DisplayError></DisplayError>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <MyAppointment></MyAppointment>
+            },
+            // {
+            //     path: '/dashboard/allusers',
+            //     element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+            // },
+            // {
+            //     path: '/dashboard/adddoctor',
+            //     element: <AdminRoute><AddDoctor></AddDoctor></AdminRoute>
+            // },
+            // {
+            //     path: '/dashboard/managedoctors',
+            //     element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
+            // },
+            // {
+            //     path: '/dashboard/payment/:id',
+            //     element: <Payment></Payment>,
+            //     loader: ({params}) => fetch(`https://doctors-portal-server-rust.vercel.app/bookings/${params.id}`)
+            // },
+        ]
+    }
 ])
 
 export default router;
