@@ -5,7 +5,7 @@ const InfoCard = ({ card }) => {
     const { name, iconlink, bgClass } = card;
     return (
         <div >
-            <Link to={`category?name=${name}`}className={`card text-white p-2 md:card-side shadow-xl ${bgClass}`}>
+            <Link to={`/category/${name}`}className={`card text-white p-2 md:card-side shadow-xl ${bgClass}`}>
                 <figure>
                     <img src={iconlink} className='rounded-full'  alt="" style={{height:'80px'}}/>
                 </figure>

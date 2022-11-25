@@ -4,6 +4,7 @@ import Blog from "../../Pages/Home/Blog/Blog";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
 import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
+import DisplayProducts from "../../Pages/Shared/DisplayProducts/DisplayProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
 
 const router = createBrowserRouter([
@@ -29,11 +30,11 @@ const router = createBrowserRouter([
                 element: <Blog></Blog>
             },
             {
-                path: 'quiz/:category',
+                path: 'category/:category',
                 loader: async ({params})=>{
                     return fetch(`/${params.category}`)
                 },
-                element: <Blog></Blog>,
+                element: <DisplayProducts></DisplayProducts>,
             }
         ]
     },
