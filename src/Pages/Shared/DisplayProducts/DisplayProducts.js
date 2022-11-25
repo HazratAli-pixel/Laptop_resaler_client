@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import BookingModal from '../BookingModal/BookingModal';
 import DisplayProduct from './DisplayProduct';
 
 const DisplayProducts = () => {
+    const [modalstatus, setamodalstatus] = useState(null)
     const productsList = [
         {
             id: 1,
@@ -39,10 +41,19 @@ const DisplayProducts = () => {
                 productsList.map(product => <DisplayProduct 
                     key={product.id}
                     product={product}
+                    setamodalstatus={setamodalstatus}
                 ></DisplayProduct>
                 )
             }
             </div>
+            {
+                modalstatus && 
+            <BookingModal
+            setamodalstatus={setamodalstatus}
+            refetch={''}
+            product={modalstatus}
+            ></BookingModal>
+            }
         </div>
     );
 };

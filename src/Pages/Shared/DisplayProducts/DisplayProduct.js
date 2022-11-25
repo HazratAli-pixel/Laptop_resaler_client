@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BsFillBookmarkPlusFill } from 'react-icons/bs';
 import { GrLocation } from 'react-icons/gr';
 import { MdReport, MdVerifiedUser } from 'react-icons/md';
-import ConfirmationModal from '../ConfirmationModal/ConfirmationModal';
 
-const DisplayProduct = ({ product }) => {
-    const [modalstatus, setamodalstatus] = useState(null)
+const DisplayProduct = ({ product, setamodalstatus }) => {
+    
     const {name, description , img} = product;
     const location="Dhaka";
     const brand="HP";
@@ -42,9 +41,9 @@ const DisplayProduct = ({ product }) => {
             <div className='card-footer p-2 flex flex-row justify-between px-5 bg-slate-200 rounded-b-lg'>
                 <div className='flex flex-row items-center gap-2  text-green-800'><span className='font-bold'>Wishlist </span><div className='tooltip' data-tip="Add to your wishlist for future purchase"> <BsFillBookmarkPlusFill/> </div></div>
                 <div className='flex flex-row items-center gap-2 text-orange-400'>Report<div className='tooltip' data-tip="Report to admin if you found anything wrong"><MdReport/></div> </div>
-                <label className="btn-info p-2 rounded-lg" htmlFor="">Book Now</label>
+                <label className="btn-info p-2 rounded-lg" htmlFor="booking-modal" onClick={()=>setamodalstatus(product)}>Book Now</label>
             </div>
-            <ConfirmationModal></ConfirmationModal>
+            
         </div>
     );
 };
