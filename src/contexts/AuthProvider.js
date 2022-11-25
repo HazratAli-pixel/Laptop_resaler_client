@@ -10,6 +10,9 @@ const auth = getAuth(app)
 const AuthProvider = ({children}) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [modeToogle, setModeToogle] = useState(true);
+    const [theme, setTheme] = useState("dark");
+
     const createUser = (email, password) =>{
         setLoading(true);
         return createUserWithEmailAndPassword(auth, email, password);
@@ -28,6 +31,19 @@ const AuthProvider = ({children}) => {
         setLoading(true);
         return signOut(auth);
     }
+    const modechange = () =>{
+        if(!modeToogle){
+          setTheme('dark');
+          setModeToogle(true)
+          document.body.setAttribute("data-theme", theme);
+        }
+        else{
+          setModeToogle(false)
+          setTheme('light');
+          document.body.setAttribute("data-theme", theme);
+        }
+        console.log(theme);
+    }
 
     useEffect( () =>{
         const unsubscribe = onAuthStateChanged(auth, currentUser =>{
@@ -45,7 +61,9 @@ const AuthProvider = ({children}) => {
         updateUser,
         logOut,
         user,
-        loading
+        loading,
+        modechange, 
+        modeToogle,
     }
     return (
         <AuthContext.Provider value={authInfo}>

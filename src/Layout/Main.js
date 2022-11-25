@@ -7,8 +7,10 @@ const Main = () => {
     return (
         <div>
             <Navbar></Navbar>
-            <Outlet></Outlet>
-            <Footer></Footer>
+            <div className='mx-auto container'>
+                <Outlet></Outlet>
+                <Footer></Footer>
+            </div>
         </div>
     );
 };
