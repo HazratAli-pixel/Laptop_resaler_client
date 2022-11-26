@@ -13,9 +13,9 @@ const Login = () => {
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
     const [token] = useToken(loginUserEmail);
+    const [error, setError] = useState('')
     const location = useLocation();
     const navigate = useNavigate();
-    const [error, setError] = useState('')
     const from = location.state?.from?.pathname || '/';
 
     useTitle("Login Form")

@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import signupsvg from '../../assets/icons/Signup-bro.svg';
 import { AuthContext } from '../../contexts/AuthProvider';
 import useTitle from '../../hooks/useTitle';
@@ -10,11 +10,14 @@ import useToken from '../../hooks/useToken';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUser } = useContext(AuthContext);
+    const { createUser, updateUser,signinWithGoogle } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
     const [createdUserEmail, setCreatedUserEmail] = useState('')
     const [token] = useToken(createdUserEmail);
+    const [radiovalue, setradiovalue] = useState('Buyer')
     const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     useTitle("Signup Form")
     
@@ -22,19 +25,33 @@ const SignUp = () => {
         navigate('/');
     }
 
-    const handleSignUp = (data) => {
+    const handleSignUp = (datas) => {
+        const formData = new FormData()
         setSignUPError('');
-        createUser(data.email, data.password)
+        const imghoskey = process.env.REACT_APP_IMGBB_KEY
+        const image = datas.photo[0]
+        formData.append('image',image)
+        console.log(radiovalue)
+
+        const url =`https://api.imgbb.com/1/upload?key=${imghoskey}`
+        fetch(url,{
+            method:"POST",
+            body: formData
+        })
+        .then(res =>res.json())
+        .then(imgdata => {
+            createUser(datas.email, datas.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
                 toast('User Created Successfully.')
                 const userInfo = {
-                    displayName: data.name
+                    displayName: datas.name,
+                    photoURL: imgdata.data.display_url
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email);
+                        saveUser(datas.name, datas.email, radiovalue, datas.address);
                     })
                     .catch(err => console.log(err));
             })
@@ -42,11 +59,27 @@ const SignUp = () => {
                 console.log(error)
                 setSignUPError(error.message)
             });
+        })
+
+
+
+
+        // const {data:imgbbupload, isLoading} = useQuery({
+        //     queryKey:['imgbbupload'],
+        //     queryFn: async ()=>{
+                
+        //         const resdata = await res.json()
+        //         return resdata
+        //     }
+        // })
+
+        
     }
 
-    const saveUser = (name, email) =>{
-        const user ={name, email};
-        fetch('https://doctors-portal-server-rust.vercel.app/users', {
+    //for database information store
+    const saveUser = (name, email, usertype = 'Buyer', address= '') =>{
+        const user ={name, email,usertype,address};
+        fetch('https://doctors-portal-', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -54,11 +87,22 @@ const SignUp = () => {
             body: JSON.stringify(user)
         })
         .then(res => res.json())
-        .then(data =>{
+        .then(data =>{ 
+            setradiovalue('Buyer')
             setCreatedUserEmail(email);
+            navigate(from, { replace: true });
         })
     }
 
+    const signupwithgoogle = ()=>{
+        signinWithGoogle()
+        .then(res =>{
+            const userInfo = res.user
+            const {displayName, email} = userInfo
+            const name = displayName
+            saveUser(name, email)
+        })
+    }
     
 
     return (
@@ -113,13 +157,13 @@ const SignUp = () => {
                                 </div>
                                 <div>
                                     <div className="form-control">
-                                        <label className="label cursor-pointer">
+                                        <label className="label cursor-pointer" onClick={()=> setradiovalue('Saler')}>
                                             <span className="label-text">Saler Account</span> 
                                             <input type="radio" name="radio-10" className="radio checked:bg-red-500" checked />
                                         </label>
                                     </div>
                                     <div className="form-control">
-                                        <label className="label cursor-pointer">
+                                        <label className="label cursor-pointer" onClick={()=> setradiovalue('Buyer')}>
                                             <span className="label-text">Buyer Account</span> 
                                             <input type="radio" name="radio-10" className="radio checked:bg-blue-500" checked />
                                         </label>
@@ -130,7 +174,7 @@ const SignUp = () => {
                             </form>
                             <p className='py-2'>Already have an account <Link className='text-secondary' to="/login">Please Login</Link></p>
                             <div className="divider">OR</div>
-                            <button className='btn btn-outline w-full'>CONTINUE WITH GOOGLE</button>
+                            <button className='btn btn-outline w-full' onClick={signupwithgoogle}>CONTINUE WITH GOOGLE</button>
 
                         </div>
                     </div>
