@@ -5,6 +5,7 @@ import { GrLocation } from 'react-icons/gr';
 import { MdReport, MdVerifiedUser } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
+import Loading from '../../Shared/Loading/Loading';
 
 const Product = ({service, setamodalstatus,setreportamodal}) => {
     const {description , photoUrl, itemName, location, nagotiationFlag,originalPrice, resalePrice,usedtime, userName, userVerification, userPhoto,brand,createdOn} = service;
@@ -41,6 +42,9 @@ const Product = ({service, setamodalstatus,setreportamodal}) => {
 
     return (
         <div className="card bg-base-100 border-2 shadow-lg">
+         {
+            loadingss? <Loading/> :""
+        }
             <figure className="px-5 pt-5">
                 <img src={photoUrl} alt="Shoes" className="rounded-xl" />
             </figure>

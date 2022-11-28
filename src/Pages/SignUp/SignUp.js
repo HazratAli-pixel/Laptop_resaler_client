@@ -76,7 +76,7 @@ const SignUp = () => {
             body: JSON.stringify(user)
         })
         .then(res => res.json())
-        .then(data =>{ 
+        .then(data =>{
             fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/jwt/`,{
                 method: 'POST',
                 headers: {
@@ -89,7 +89,7 @@ const SignUp = () => {
             .then(data => {
                 if (data.accessToken) {
                     localStorage.setItem('accessToken', data.accessToken);
-                    toast('User Created Successfully.')
+                    toast.success('User Created Successfully.')
                     setradiovalue('Buyer')
                     setLoading(false)
                     setToken(data.accessToken)

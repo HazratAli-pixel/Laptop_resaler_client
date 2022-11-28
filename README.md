@@ -1,17 +1,19 @@
-# Project name : Skill Tester
+# Project name : Laptop Resaler
 
-[open_learning](https://open-learning-6d337.web.app/ "open Learning")
-[Vercel_link](https://assignment10-server-sable.vercel.app/ "Vercel link")
+1. [Laptop Resaler](https://laptopreseler.web.app/ "Laptop Resaler")
+2. [Vercel_link](https://laptop-reseler-server-side-hazratali-pixel.vercel.app/ "Laptop Resaler")
 
 ### This is a React project
 
 1. CSS Library: tailwind and tailwind CSS component library daisyUI
 2. Icon: react icons
 3. React router Dom
-4. react-to-pdf
-5. react-toastify
-6. for hosting i use firebase hosting
-7. for serside i use vercel
+4. react-toastify
+5. for hosting i use firebase hosting
+6. for serside i use vercel
+7. react query
+8. react-hook-form
+9. axios
 
 ## Author information
 
@@ -24,11 +26,10 @@
 ## Basic Information about this project
 
 - অনলাইন ভিত্তিক প্লাটফর্ম
-- এক সাথে সকল প্রকার কোর্স এর সমহার।
-- এখানে কোর্স কেনার সুবিধা আছে।
-- ইউজার লগইন কনট্রোল
-- ইমেইল ভেরিফিকেশন সিস্টেম
-- সাইন আপ করার সুবিধা ছাড়াও ঝামেলাহিন জিমেইল, গিটহাব ও ফেসবুক লগইনের সুবিধা।
+- এখানে ইউজার লগইন ও সাইন আপ করতে পারবে।
+- যেকোনো ভিজিটর চাইলে তার পছন্দের প্রডাক্ট উইসলিস্ট করে রাখতে পারবে।
+- যেকোনো ভিজিটর চাইলে কোনো প্রডাক্ট এ রিপোর্ট করতে পারবে।
+- সোশ্যাল লগইন সিস্টেম আছে।
+- অ্যাডমিন প্যানেল থেকে সব কিছু কনট্রোল করা যাবে।
+- সেলার প্যানেল থেকে সেলার তার লিস্টক্রিত প্রডাক্ট ম্যানেজ করতে পারবে।
 - এছাড়াও আরো কিছু সুযোগ সুবিধা আছে এই প্রজেক্টে
-
-~~বিদ্যুৎ সমস্যার জন্য রিকুয়ারমেন্ট ব্যাতিত বেশি কিছু করার সুযোগ হয় নাই। তবে মার্ক্স পাওয়ার পর আবার যত কিছু অপডেট করা যায় করার চেষ্টা করা হবে~~

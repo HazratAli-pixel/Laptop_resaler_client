@@ -8,7 +8,6 @@ import Service from './Product';
 
 const Products = () => {
     const { user } = useContext(AuthContext);
-    const [loadingss, setLoading] = useState(false);
     const [modalstatus, setamodalstatus] = useState(null)
     const [reportmodal, setreportamodal] = useState(null)
 
@@ -23,7 +22,9 @@ const Products = () => {
 
 
     return (
-        <div className='mt-16 '>
+        <>
+            {
+                servicesData.length===0? "" : <div className='mt-16 '>
             <div className='text-center'>
                 <h3 className='text-3xl font-bold text-primary uppercase'>Advertise Products</h3>
                 <h2 className='p-2 text-xl'>See here latest unsold products</h2>
@@ -56,6 +57,8 @@ const Products = () => {
             }
             </div>
         </div>
+            }
+        </>
     );
 };
 

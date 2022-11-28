@@ -5,16 +5,17 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import loginsvg from '../../assets/icons/Mobile login-amico.svg';
 import { AuthContext } from '../../contexts/AuthProvider';
 import useTitle from '../../hooks/useTitle';
-import useToken from '../../hooks/useToken';
+import Loading from '../Shared/Loading/Loading';
 
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const { signIn, signinWithGoogle } = useContext(AuthContext);
+    const { signIn, signinWithGoogle,setUser } = useContext(AuthContext);
     const [loginError, setLoginError] = useState('');
     const [loginUserEmail, setLoginUserEmail] = useState('');
-    const [token] = useToken(loginUserEmail);
+    const [token, setToken] = useState('');
     const [error, setError] = useState('')
     const location = useLocation();
+    const [loadingss, setLoading] = useState(false);
     const navigate = useNavigate();
     const from = location.state?.from?.pathname || '/';
 
@@ -31,7 +32,24 @@ const Login = () => {
         signIn(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+                const email = user.email
+                    fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/jwt/`,{
+                        method: 'POST',
+                        headers: {
+                            'content-type': 'application/json'
+                        },
+                        body: JSON.stringify({email})
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.accessToken) {
+                            localStorage.setItem('accessToken', data.accessToken);
+                            toast('User login Successful.')
+                            setLoading(false)
+                            setToken(data.accessToken)
+                            navigate(from, { replace: true });
+                        }
+                    });
                 setLoginUserEmail(data.email);
             })
             .catch(error => {
@@ -42,15 +60,62 @@ const Login = () => {
     const signinwithgoogle = ()=>{
         signinWithGoogle()
         .then(result=>{
+            const user= result.user;
             setError('');
             toast.success("Successfuly Loged in")
-            navigate(from, {replace: true})
+            const name = user.displayName
+            const email = user.email
+            const photoUrl = user.photoURL
+            const userType = "Buyer"
+            const address = ""
+            saveUser(name, email, userType, address, photoUrl)
         })
         .then(error => setError(error.message))
     }
 
+
+
+    //for database information store
+    const saveUser = (name, email, userType, address, photoUrl) =>{
+        const user ={name, email,userType,address,photoUrl};
+        fetch('https://laptop-reseler-server-side-hazratali-pixel.vercel.app/user/', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data =>{
+            fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/jwt/`,{
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({email})
+                
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.accessToken) {
+                    localStorage.setItem('accessToken', data.accessToken);
+                    toast.success('Social login Successful.')
+                    setLoading(false)
+                    setToken(data.accessToken)
+                    navigate(from, { replace: true });
+                }
+            });
+        })
+    }
+
+
+
+
     return (
         <div className='py-24 flex justify-center items-center'>
+         {
+                loadingss? <Loading></Loading>: ""
+            }
             <div>
                 <div className='flex flex-col sm:flex-row md:flex-row lg:flex-row items-center justify-center gap-0 sm:gap-10'>
                     <div className='w-full sm:w-1/2'>
