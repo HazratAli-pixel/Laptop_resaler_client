@@ -10,7 +10,7 @@ const CheckoutForm = ({ booking }) => {
 
     const stripe = useStripe();
     const elements = useElements();
-    const { resalePrice, itemName ,  userid, slot, _id } = booking;
+    const { resalePrice, itemName ,  userid, _id } = booking;
     // const { email, patient, _id } = booking;
 
     const price = resalePrice
