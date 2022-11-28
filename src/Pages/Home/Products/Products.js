@@ -1,34 +1,26 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import React, { useContext, useState } from 'react';
+import { AuthContext } from '../../../contexts/AuthProvider';
+import BookingModal from '../../Shared/BookingModal/BookingModal';
+import ReportModal from '../../Shared/ReportModal/ReportModal';
 import Service from './Product';
 
 const Products = () => {
+    const { user } = useContext(AuthContext);
+    const [loadingss, setLoading] = useState(false);
+    const [modalstatus, setamodalstatus] = useState(null)
+    const [reportmodal, setreportamodal] = useState(null)
 
-    const servicesData = [
-        {
-            id: 1,
-            name: 'Fluoride Treatment',
-            description: 'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
-            img: 'https://logodownload.org/wp-content/uploads/2017/04/fujitsu-logo-0.png'
-        },
-        {
-            id: 2,
-            name: 'Cavity Filling',
-            description: 'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
-            img: 'http://nwac.com.au/wp-content/uploads/2013/08/Fujitsu-Logo-Red-Backing.jpg'
-        },
-        {
-            id: 3,
-            name: 'Teeth Whitening',
-            description: 'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
-            img: 'https://logodownload.org/wp-content/uploads/2017/04/fujitsu-logo-0.png'
-        },
-        {
-            id: 4,
-            name: 'Teeth Whitening',
-            description: 'Lorem Ipsum is simply dummy printing and typesetting indust Ipsum has been the',
-            img: 'https://logodownload.org/wp-content/uploads/2017/04/fujitsu-logo-0.png'
-        },
-    ]
+    const {data: servicesData =[]} = useQuery({
+        queryKey:["servicesData"],
+        queryFn: async ()=>{
+            const resdata = await axios(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/products/advertise/list`)
+            return resdata.data.respons
+        }
+    })
+
+
 
     return (
         <div className='mt-16 '>
@@ -39,10 +31,29 @@ const Products = () => {
             <div className='grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
                 {
                     servicesData.map(service => <Service
-                        key={service.id}
+                        key={service._id}
                         service={service}
+                        setamodalstatus={setamodalstatus}
+                        setreportamodal={setreportamodal}
                     ></Service>)
                 }
+                {
+                modalstatus && user &&
+                    <BookingModal
+                    setamodalstatus={setamodalstatus}
+                    refetch={''}
+                    product={modalstatus}
+                    ></BookingModal>
+            
+            }
+            {
+                reportmodal && user &&
+                    <ReportModal
+                    setreportamodal={setreportamodal}
+                    refetch={''}
+                    reportmodal={reportmodal}
+                    ></ReportModal>
+            }
             </div>
         </div>
     );

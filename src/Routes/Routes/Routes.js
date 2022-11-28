@@ -36,10 +36,14 @@ const router = createBrowserRouter([
                 path: '/profile',
                 element: <PrivateRoute><Profile></Profile></PrivateRoute>
             },
+            // {
+            //     path: '/category',
+            //     element: <PrivateRoute><DisplayProducts></DisplayProducts></PrivateRoute> ,
+            // }
             {
                 path: 'category/:category',
                 loader: async ({params})=>{
-                    return fetch(`/${params.category}`)
+                    return fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/products/category/${params.category}`)
                 },
                 element: <PrivateRoute><DisplayProducts></DisplayProducts></PrivateRoute> ,
             }
