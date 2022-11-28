@@ -72,7 +72,6 @@ const CheckoutForm = ({ booking }) => {
             return;
         }
         if (paymentIntent.status === "succeeded") {
-            console.log('card info', card);
             // store payment info in the database
             const payment = {
                 price,
@@ -90,9 +89,23 @@ const CheckoutForm = ({ booking }) => {
             })
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
-                        setSuccess('Congrats! your payment completed');
-                        setTransactionId(paymentIntent.id);
+                    setSuccess('Congrats! your payment completed');
+                    setTransactionId(paymentIntent.id);
+                    const statuschng = {soldFlag: true}
+                    fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/products/sold/${_id}`, {
+                        method: 'patch',
+                        headers: {
+                            'content-type': 'application/json',
+                            authorization: `bearer ${localStorage.getItem('accessToken')}`
+                        },
+                        body: JSON.stringify(statuschng)
+                    })
+                        .then(res => res.json())
+                        .then(data => {
+                                console.log(data);
+                                // setSuccess('Congrats! your payment completed');
+                                // setTransactionId(paymentIntent.id);
+                        })
                 })
         }
         setProcessing(false);

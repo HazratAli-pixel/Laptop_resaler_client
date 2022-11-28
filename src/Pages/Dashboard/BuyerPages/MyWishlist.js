@@ -4,12 +4,12 @@ import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
-const MyOrders = () => {
+const MyWishlist = () => {
   const {user} = useContext(AuthContext)
   const {data: products = [], refetch} = useQuery({
       queryKey: ['products'],
       queryFn: async() =>{
-          const res = await fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/booking/user/${user?.email}`);
+          const res = await fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/wishlist/user/${user?.email}`);
           const data = await res.json();
           return data.respons;
       }
@@ -33,7 +33,7 @@ const MyOrders = () => {
 
     return (
         <div>
-            <h2 className="text-3xl">My Orders</h2>
+            <h2 className="text-3xl">My Wishlist</h2>
             <div className="overflow-x-auto">
   <table className="table w-full">
     <thead>
@@ -73,4 +73,4 @@ const MyOrders = () => {
     );
 };
 
-export default MyOrders;
+export default MyWishlist;

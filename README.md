@@ -14,6 +14,7 @@
 7. react query
 8. react-hook-form
 9. axios
+10. Stripe for payemt
 
 ## Author information
 
