@@ -24,7 +24,7 @@ const BookingModal = ({ setamodalstatus, product, refetch }) => {
             location
         }
 
-        fetch('http://localhost:5000/booking', {
+        fetch('https://laptop-reseler-server-side-hazratali-pixel.vercel.app/booking', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'

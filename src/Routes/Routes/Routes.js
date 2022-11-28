@@ -1,6 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
+import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
+import AddDoctor from "../../Pages/Dashboard/AddProduct/AddProduct";
+import AllBuyers from "../../Pages/Dashboard/AllUsers/AllBuers";
+import AllSalers from "../../Pages/Dashboard/AllUsers/AllSalers";
+import Payment from "../../Pages/Dashboard/Payment/Payment";
+import ReportedProducts from "../../Pages/Dashboard/ReportedProducts/ReportedProducts";
+import MyProducts from "../../Pages/Dashboard/SalerPage/MyProducts";
 import Blog from "../../Pages/Home/Blog/Blog";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
@@ -8,6 +15,7 @@ import Profile from "../../Pages/Profile/Profile";
 import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 import DisplayProducts from "../../Pages/Shared/DisplayProducts/DisplayProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
+import AdminRoute from "../AdminRoute/AdminRoute";
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
@@ -36,10 +44,6 @@ const router = createBrowserRouter([
                 path: '/profile',
                 element: <PrivateRoute><Profile></Profile></PrivateRoute>
             },
-            // {
-            //     path: '/category',
-            //     element: <PrivateRoute><DisplayProducts></DisplayProducts></PrivateRoute> ,
-            // }
             {
                 path: 'category/:category',
                 loader: async ({params})=>{
@@ -54,27 +58,39 @@ const router = createBrowserRouter([
         element: <PrivateRoute> <DashboardLayout></DashboardLayout></PrivateRoute>,
         errorElement: <DisplayError></DisplayError>,
         children: [
-            // {
-            //     path: '/dashboard',
-            //     element: <MyAppointment></MyAppointment>
-            // },
-            // {
-            //     path: '/dashboard/allusers',
-            //     element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
-            // },
-            // {
-            //     path: '/dashboard/adddoctor',
-            //     element: <AdminRoute><AddDoctor></AddDoctor></AdminRoute>
-            // },
+            {
+                path: '/dashboard',
+                element: <Profile></Profile>
+            },
+            {
+                path: '/dashboard/allbuyer',
+                element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>
+            },
+            {
+                path: '/dashboard/allsalers',
+                element: <AdminRoute><AllSalers></AllSalers></AdminRoute>
+            },
+            {
+                path: '/dashboard/addproduct',
+                element: <AddProduct></AddProduct>
+            },
+            {
+                path: '/dashboard/reportedproucts',
+                element: <AdminRoute><ReportedProducts></ReportedProducts></AdminRoute>
+            },
+            {
+                path: '/dashboard/myproducts',
+                element: <MyProducts></MyProducts>
+            },
             // {
             //     path: '/dashboard/managedoctors',
             //     element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
             // },
-            // {
-            //     path: '/dashboard/payment/:id',
-            //     element: <Payment></Payment>,
-            //     loader: ({params}) => fetch(`https://doctors-portal-server-rust.vercel.app/bookings/${params.id}`)
-            // },
+            {
+                path: '/dashboard/payment/:id',
+                element: <Payment></Payment>,
+                loader: ({params}) => fetch(`https://doctors-portal-server-rust.vercel.app/bookings/${params.id}`)
+            },
         ]
     }
 ])

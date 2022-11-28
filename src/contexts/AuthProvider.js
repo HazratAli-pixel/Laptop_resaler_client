@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, deleteUser, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import app from '../firebase/firebase.config';
 ;
@@ -34,6 +34,10 @@ const AuthProvider = ({children}) => {
     const logOut = () =>{
         setLoading(true);
         return signOut(auth);
+    }
+    const deleteuserss = (uid) =>{
+        setLoading(true);
+        return auth.deleteUser(uid);
     }
     const modechange = () =>{
         if(!modeToogle){
@@ -71,6 +75,7 @@ const AuthProvider = ({children}) => {
         modechange, 
         modeToogle,
         signinWithGoogle,
+        deleteuserss,
     }
     return (
         <AuthContext.Provider value={authInfo}>

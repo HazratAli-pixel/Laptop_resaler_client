@@ -80,7 +80,7 @@ const Header = () => {
                   </li>
                   {
                     user? <div className='pl-2'>
-                    <Link id='' to='/profile' className='flex justify-end'><img id='' src={user.photoURL} className='border-2 border-green-400 rounded-full hover:' alt="" style={{width: "45px", height:"45px"}} srcset="" /></Link>
+                    <Link id='' to='/profile' className='flex justify-end'><img id='' src={user?.photoURL} className='border-2 border-green-400 rounded-full hover:' alt="" style={{width: "45px", height:"45px"}} srcset="" /></Link>
                     <div className='text-white p-2' id=''>
                       <p >{user.displayName}</p>
                     </div>
@@ -93,6 +93,9 @@ const Header = () => {
                   <p className='flex justify-end'>{user? <button className='p-2 flex items-center' onClick={userlogout}>logout</button>:""}</p>
                 </ul>
               </div>
+              <label htmlFor="dashboard-drawer" tabIndex={2} className="btn btn-ghost lg:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+            </label>
             </div>
           </div>
         </div>
