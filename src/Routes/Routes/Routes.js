@@ -4,6 +4,7 @@ import Main from "../../Layout/Main";
 import Blog from "../../Pages/Home/Blog/Blog";
 import Home from "../../Pages/Home/Home/Home";
 import Login from "../../Pages/Login/Login";
+import Profile from "../../Pages/Profile/Profile";
 import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 import DisplayProducts from "../../Pages/Shared/DisplayProducts/DisplayProducts";
 import SignUp from "../../Pages/SignUp/SignUp";
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: '/blog',
                 element: <Blog></Blog>
+            },
+            {
+                path: '/profile',
+                element: <PrivateRoute><Profile></Profile></PrivateRoute>
             },
             {
                 path: 'category/:category',

@@ -7,7 +7,6 @@ import { AuthContext } from '../../../contexts/AuthProvider';
 
 const DisplayProduct = ({ product, setamodalstatus,setreportamodal }) => {
     const {name, description , img} = product;
-    const {user} = useContext(AuthContext)
     const location2="Dhaka";
     const brand="HP";
     const resale_price=12000;

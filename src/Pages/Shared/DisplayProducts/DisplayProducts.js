@@ -37,6 +37,8 @@ const DisplayProducts = () => {
         },
     ]
 
+
+
     return (
         <div className='shadow-lg px-3 pt-14 pb-3 rounded-lg'>
             <div className=''>

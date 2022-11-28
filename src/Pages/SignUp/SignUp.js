@@ -5,15 +5,15 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import signupsvg from '../../assets/icons/Signup-bro.svg';
 import { AuthContext } from '../../contexts/AuthProvider';
 import useTitle from '../../hooks/useTitle';
-import useToken from '../../hooks/useToken';
-
+import Loading from '../Shared/Loading/Loading';
 
 const SignUp = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
-    const { createUser, updateUser,signinWithGoogle } = useContext(AuthContext);
+    const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUPError] = useState('');
-    const [createdUserEmail, setCreatedUserEmail] = useState('')
-    const [token] = useToken(createdUserEmail);
+    const [loadingss, setLoading] = useState(false);
+    const [token, setToken] = useState('');
+    
     const [radiovalue, setradiovalue] = useState('Buyer')
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,6 +26,7 @@ const SignUp = () => {
     }
 
     const handleSignUp = (datas) => {
+        setLoading(true)
         const formData = new FormData()
         setSignUPError('');
         const imghoskey = process.env.REACT_APP_IMGBB_KEY
@@ -42,16 +43,18 @@ const SignUp = () => {
         .then(imgdata => {
             createUser(datas.email, datas.password)
             .then(result => {
-                const user = result.user;
-                console.log(user);
-                toast('User Created Successfully.')
                 const userInfo = {
                     displayName: datas.name,
                     photoURL: imgdata.data.display_url
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(datas.name, datas.email, radiovalue, datas.address);
+                        const photoUrl = imgdata.data.display_url
+                        const name = datas.name
+                        const email = datas.email
+                        const address = datas.address
+                        const userType = radiovalue
+                        saveUser(name, email, userType,address,photoUrl);
                     })
                     .catch(err => console.log(err));
             })
@@ -60,26 +63,12 @@ const SignUp = () => {
                 setSignUPError(error.message)
             });
         })
-
-
-
-
-        // const {data:imgbbupload, isLoading} = useQuery({
-        //     queryKey:['imgbbupload'],
-        //     queryFn: async ()=>{
-                
-        //         const resdata = await res.json()
-        //         return resdata
-        //     }
-        // })
-
-        
     }
 
     //for database information store
-    const saveUser = (name, email, usertype = 'Buyer', address= '') =>{
-        const user ={name, email,usertype,address};
-        fetch('https://doctors-portal-', {
+    const saveUser = (name, email, userType, address, photoUrl) =>{
+        const user ={name, email,userType,address,photoUrl};
+        fetch('https://laptop-reseler-server-side-hazratali-pixel.vercel.app/user/', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -88,25 +77,35 @@ const SignUp = () => {
         })
         .then(res => res.json())
         .then(data =>{ 
-            setradiovalue('Buyer')
-            setCreatedUserEmail(email);
-            navigate(from, { replace: true });
+            fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/jwt/`,{
+                method: 'POST',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify({email})
+                
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.accessToken) {
+                    localStorage.setItem('accessToken', data.accessToken);
+                    toast('User Created Successfully.')
+                    setradiovalue('Buyer')
+                    setLoading(false)
+                    setToken(data.accessToken)
+                    navigate(from, { replace: true });
+                }
+            });
         })
     }
 
-    const signupwithgoogle = ()=>{
-        signinWithGoogle()
-        .then(res =>{
-            const userInfo = res.user
-            const {displayName, email} = userInfo
-            const name = displayName
-            saveUser(name, email)
-        })
-    }
     
 
     return (
         <div className='py-24 flex justify-center items-center'>
+            {
+                loadingss? <Loading></Loading>: ""
+            }
             <div>
                 <div>
                     <div className='flex flex-col sm:flex-row md:flex-row lg:flex-row items-center justify-center gap-0 sm:gap-10'>
@@ -173,9 +172,6 @@ const SignUp = () => {
                                 {signUpError && <p className='text-red-600'>{signUpError}</p>}
                             </form>
                             <p className='py-2'>Already have an account <Link className='text-secondary' to="/login">Please Login</Link></p>
-                            <div className="divider">OR</div>
-                            <button className='btn btn-outline w-full' onClick={signupwithgoogle}>CONTINUE WITH GOOGLE</button>
-
                         </div>
                     </div>
                 </div>
