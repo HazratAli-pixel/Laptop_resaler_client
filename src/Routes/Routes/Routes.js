@@ -2,9 +2,9 @@ import { createBrowserRouter } from "react-router-dom";
 import DashboardLayout from "../../Layout/DashboardLayout";
 import Main from "../../Layout/Main";
 import AddProduct from "../../Pages/Dashboard/AddProduct/AddProduct";
-import AddDoctor from "../../Pages/Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../../Pages/Dashboard/AllUsers/AllBuers";
 import AllSalers from "../../Pages/Dashboard/AllUsers/AllSalers";
+import MyOrders from "../../Pages/Dashboard/BuyerPages/MyOrders";
 import Payment from "../../Pages/Dashboard/Payment/Payment";
 import ReportedProducts from "../../Pages/Dashboard/ReportedProducts/ReportedProducts";
 import MyProducts from "../../Pages/Dashboard/SalerPage/MyProducts";
@@ -82,14 +82,14 @@ const router = createBrowserRouter([
                 path: '/dashboard/myproducts',
                 element: <MyProducts></MyProducts>
             },
-            // {
-            //     path: '/dashboard/managedoctors',
-            //     element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
-            // },
+            {
+                path: '/dashboard/myorders',
+                element: <MyOrders></MyOrders>
+            },
             {
                 path: '/dashboard/payment/:id',
                 element: <Payment></Payment>,
-                loader: ({params}) => fetch(`https://doctors-portal-server-rust.vercel.app/bookings/${params.id}`)
+                loader: ({params}) => fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/products/${params.id}`)
             },
         ]
     }

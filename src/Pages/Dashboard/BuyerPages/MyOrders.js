@@ -1,36 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../../contexts/AuthProvider';
 
-const MyProducts = () => {
-  const {deleteuserss, user} = useContext(AuthContext)
+const MyOrders = () => {
+  const {user} = useContext(AuthContext)
   const {data: products = [], refetch} = useQuery({
       queryKey: ['products'],
       queryFn: async() =>{
-          const res = await fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/products/user/${user?.email}`);
+          const res = await fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/booking/user/${user?.email}`);
           const data = await res.json();
           return data.respons;
       }
   });
 
-  const MakeAdvertise = id => {
-      fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/products/advertise/${id}`, {
-          method: 'PATCH',
-          headers: {
-            'content-type': 'application/json',
-              authorization: `bearer ${localStorage.getItem('accessToken')}`
-          },
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-        toast.success('Prodcut added to advertise sections.')
-        refetch();
-      })
-  }
   const handleDelete = id => {
-      fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/products/${id}`, {
+      fetch(`https://laptop-reseler-server-side-hazratali-pixel.vercel.app/booking/${id}`, {
           method: 'DELETE',
           headers: {
               authorization: `bearer ${localStorage.getItem('accessToken')}`
@@ -39,7 +25,7 @@ const MyProducts = () => {
       .then(res => res.json())
       .then(data => {
           if(data.message){
-            toast.success('Delete suffcessfull.')
+            toast.success('Delete successfull.')
             refetch();
           }
       })
@@ -68,16 +54,15 @@ const MyProducts = () => {
             <td><img src={product?.photoUrl} className='max-w-20 max-h-20 rounded-full' alt="" /></td>
             <td>{product?.itemName}</td>
             <td>{product?.resalePrice}</td>
-            
             {
-              product?.soldFlag===true? <td> <label className='btn btn-xs btn-success'>Sold</label></td> :
-              <td><label  className='btn btn-xs btn-error'>Unsold</label></td>
+              product?.soldFlag===true? <td> <label className='btn btn-sm btn-success'>Sold</label></td> :
+              <td><label className='btn btn-sm btn-error'>Unsold</label></td>
             }            
             {
-              product?.advertiseFlag === true? <td><label className='btn btn-xs btn-success'>Advertise</label></td> :
-              <td><button onClick={() => MakeAdvertise(product._id)} className='btn btn-xs btn-warning'>Make Advertise</button></td>
-            }            
-            <td><button className='btn btn-xs btn-danger' onClick={() => handleDelete(product._id)}>Delete</button></td>
+              product?.soldFlag === true? <td><label className='btn btn-sm btn-success'>Allready Sold</label></td> :
+              <td><Link to={`/dashboard/payment/${product._id}`} className='btn btn-sm btn-warning'>Pay now</Link></td>
+            }
+            <td><button className='btn btn-sm btn-danger' onClick={() => handleDelete(product._id)}>Delete</button></td>
           </tr>)
       }
       
@@ -88,4 +73,4 @@ const MyProducts = () => {
     );
 };
 
-export default MyProducts;
+export default MyOrders;

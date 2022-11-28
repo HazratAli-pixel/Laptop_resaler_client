@@ -10,11 +10,13 @@ const CheckoutForm = ({ booking }) => {
 
     const stripe = useStripe();
     const elements = useElements();
-    const { price, email, patient, _id } = booking;
+    const { resalePrice, itemName ,  userid, slot, _id } = booking;
+    // const { email, patient, _id } = booking;
 
+    const price = resalePrice
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("https://doctors-portal-server-rust.vercel.app/create-payment-intent", {
+        fetch("https://laptop-reseler-server-side-hazratali-pixel.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -58,8 +60,8 @@ const CheckoutForm = ({ booking }) => {
                 payment_method: {
                     card: card,
                     billing_details: {
-                        name: patient,
-                        email: email
+                        name: itemName,
+                        email: userid
                     },
                 },
             },
@@ -74,11 +76,11 @@ const CheckoutForm = ({ booking }) => {
             // store payment info in the database
             const payment = {
                 price,
-                transactionId: paymentIntent.id,
-                email,
-                bookingId: _id
+                trxId: paymentIntent.id,
+                productId: _id,
+                userId:userid
             }
-            fetch('https://doctors-portal-server-rust.vercel.app/payments', {
+            fetch('https://laptop-reseler-server-side-hazratali-pixel.vercel.app/payment', {
                 method: 'POST',
                 headers: {
                     'content-type': 'application/json',
@@ -89,10 +91,8 @@ const CheckoutForm = ({ booking }) => {
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
-                    if (data.insertedId) {
                         setSuccess('Congrats! your payment completed');
                         setTransactionId(paymentIntent.id);
-                    }
                 })
         }
         setProcessing(false);
@@ -123,7 +123,7 @@ const CheckoutForm = ({ booking }) => {
                     className='btn btn-sm mt-4 btn-primary'
                     type="submit"
                     disabled={!stripe || !clientSecret || processing}>
-                    Pay
+                    Pay now
                 </button>
             </form>
             <p className="text-red-500">{cardError}</p>

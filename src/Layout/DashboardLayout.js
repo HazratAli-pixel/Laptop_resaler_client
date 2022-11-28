@@ -38,7 +38,7 @@ const DashboardLayout = () => {
                         }
                         {
                             isAdmin === "Buyer" && <>
-                                <li><Link className='font-bold' to="/dashboard/allusers">My Orders</Link></li>
+                                <li><Link className='font-bold' to="/dashboard/myorders">My Orders</Link></li>
                                 <li><Link className='font-bold' to="/dashboard/adddoctor">My Wishlist</Link></li>
                             </>
                             

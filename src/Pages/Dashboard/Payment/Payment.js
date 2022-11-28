@@ -8,16 +8,18 @@ import CheckoutForm from './CheckoutForm';
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PK);
 
 const Payment = () => {
-    const booking = useLoaderData();
-    // const navigation = useNavigation();
-    const { treatment, price, appointmentDate, slot } = booking;
-    // if(navigation.state === "loading"){
-    //     return <Loading></Loading>
-    // }
+    const loaddata = useLoaderData();
+    const booking = loaddata.respons[0]
+    console.log(booking)
+    const navigation = useNavigation();
+    const { resalePrice, itemName ,  userid, slot } = booking;
+    if(navigation.state === "loading"){
+        return <Loading></Loading>
+    }
     return (
         <div>
-            <h3 className="text-3xl">Payment for {treatment}</h3>
-            <p className="text-xl">Please pay <strong>${price}</strong> for your appointment on {appointmentDate} at {slot}</p>
+            <h3 className="text-3xl">Payment for {itemName}</h3>
+            <p className="text-xl">Please pay <strong>${resalePrice}</strong> for your product</p>
             <div className='w-96 my-12'>
                 <Elements stripe={stripePromise}>
                     <CheckoutForm
